@@ -1,0 +1,526 @@
+.student-portal {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dashboard-info {
+  display: grid;
+  gap: 2rem;
+}
+
+.dashboard-info h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Fee Payment Styles */
+.fee-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.fee-item {
+  background-color: var(--background-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Complaints Styles */
+.complaints-list {
+  margin-top: 2rem;
+}
+
+.complaint-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--background-color);
+}
+
+.status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  margin-left: 1rem;
+}
+
+.status.pending {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.status.resolved {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.status.rejected {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.student-room {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.room-details {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.room-features, .room-rules {
+  margin-top: 1.5rem;
+}
+
+.room-features h3, .room-rules h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.room-features ul, .room-rules ul {
+  list-style: none;
+  padding: 0;
+}
+
+.room-features li, .room-rules li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-badge.unpaid {
+  background: #ffe6e6;
+  color: #dc3545;
+}
+
+.status-badge.paid {
+  background: #e6ffe6;
+  color: #28a745;
+}
+
+.status-badge.open {
+  background: #fff3e6;
+  color: #fd7e14;
+}
+
+.status-badge.closed {
+  background: #e6e6e6;
+  color: #6c757d;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.no-room {
+  text-align: center;
+  padding: 2rem;
+  color: var(--secondary-color);
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--secondary-color);
+}
+
+.error-message {
+  color: var(--error-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid var(--error-color);
+  border-radius: 4px;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .student-room {
+    padding: 10px;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .detail-item .label {
+    min-width: auto;
+  }
+}
+
+/* Add these to your existing student.css */
+.fees-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.fee-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.pay-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pay-button:hover {
+  background-color: #218838;
+}
+
+.pay-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.no-fees {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-badge.unpaid {
+  background: #ffe6e6;
+  color: #dc3545;
+}
+
+.status-badge.paid {
+  background: #e6ffe6;
+  color: #28a745;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+/* Student Dashboard Layout */
+.student-dashboard {
+  min-height: 100vh;
+  background-color: var(--light);
+}
+
+/* Navigation */
+.dashboard-nav {
+  background: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dark);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: var(--light);
+  color: var(--primary);
+}
+
+.logout-button {
+  background-color: var(--danger);
+  color: var(--white);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  margin-left: auto;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+/* Welcome Card - Only for dashboard */
+.welcome-card {
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, var(--primary), var(--primary-dark));
+  color: var(--white);
+}
+
+.welcome-card .card-header {
+  background: transparent;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.25rem;
+}
+
+.welcome-card .card-content {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-card .card-content p {
+  margin: 0.5rem 0;
+}
+
+/* Dashboard Overview */
+.dashboard-overview {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Room Details */
+.room-details {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--light);
+  border-radius: var(--radius);
+  align-items: center;
+}
+
+.detail-item .label {
+  color: var(--secondary);
+  font-weight: 500;
+}
+
+.detail-item .value {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.room-features, .room-rules {
+  margin-top: 2rem;
+}
+
+.room-features h3, .room-rules h3 {
+  color: var(--dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.room-features ul, .room-rules ul {
+  list-style: none;
+  padding: 0;
+}
+
+.room-features li, .room-rules li {
+  padding: 0.75rem 1rem;
+  background: var(--light);
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+}
+
+.room-features li:before, .room-rules li:before {
+  content: "•";
+  color: var(--primary);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Fees Section */
+.fees-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.fee-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-item {
+  background: var(--light);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item span:first-child {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.summary-item span:last-child {
+  color: var(--dark);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Complaints Section */
+.complaints-form {
+  margin-bottom: 2rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-nav {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout-button {
+    margin-left: 0;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+}
+
+/* Add a mobile menu button */
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+} 

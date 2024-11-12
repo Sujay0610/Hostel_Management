@@ -1,0 +1,57 @@
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .admin-nav, .student-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .fee-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .table-container {
+    margin: 0 -1rem;
+  }
+}
+
+/* Loading spinner */
+.loading-spinner {
+  border: 3px solid var(--background-color);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Utility classes */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+:root {
+  --primary-color: #1a73e8;
+  --secondary-color: #5f6368;
+  --error-color: #dc3545;
+  --success-color: #28a745;
+}

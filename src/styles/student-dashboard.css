@@ -1,0 +1,82 @@
+.student-dashboard {
+  min-height: 100vh;
+  background-color: var(--light);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-nav {
+  background: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dark);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-weight: 500;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: var(--light);
+  color: var(--primary);
+}
+
+.logout-button {
+  background-color: var(--danger);
+  color: var(--white);
+  border: 2px solid var(--danger);
+  padding: 0.25rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout-button {
+    margin-top: 1rem;
+    width: 100%;
+  }
+} 

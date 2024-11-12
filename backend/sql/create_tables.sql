@@ -1,0 +1,70 @@
+-- Create database
+CREATE DATABASE IF NOT EXISTS hostel_management;
+USE hostel_management;
+
+-- Create tables
+CREATE TABLE IF NOT EXISTS student (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(20) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS room (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    room_type VARCHAR(50) NOT NULL,
+    capacity INT NOT NULL,
+    availability BOOLEAN DEFAULT TRUE,
+    student_id INT UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS fee (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(10,2) NOT NULL,
+    due_date DATE NOT NULL,
+    paid_date DATE,
+    status VARCHAR(20) DEFAULT 'Unpaid',
+    description VARCHAR(200),
+    student_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS complaint (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    description TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'Open',
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    student_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS report (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    report_type VARCHAR(50) NOT NULL,
+    date_generated DATETIME DEFAULT CURRENT_TIMESTAMP,
+    admin_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES admin(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(80) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    student_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE SET NULL
+); 

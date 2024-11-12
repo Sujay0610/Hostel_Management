@@ -1,0 +1,189 @@
+/* CSS Reset and Variables */
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #1e40af;
+  --background-color: #f1f5f9;
+  --card-background: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --error-color: #ef4444;
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.title {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+/* Navigation Styles */
+.admin-nav, .student-nav {
+  background-color: var(--card-background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-nav a, .student-nav a {
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.admin-nav a:hover, .student-nav a:hover {
+  background-color: var(--background-color);
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--card-background);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--background-color);
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--text-secondary);
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: var(--secondary-color);
+}
+
+.button.destructive {
+  background-color: var(--error-color);
+}
+
+/* Utility Classes */
+.mt-4 { margin-top: var(--spacing-4); }
+.mr-2 { margin-right: var(--spacing-2); }
+.h-4 { height: 1rem; }
+.w-4 { width: 1rem; }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icon Styles */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--spacing-2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-4);
+  }
+
+  .tabs-list {
+    flex-wrap: wrap;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-header,
+  .card-content,
+  .card-footer {
+    padding: var(--spacing-4);
+  }
+
+  .title {
+    padding: var(--spacing-2) 0;
+    margin-bottom: var(--spacing-2);
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+    --border: #334155;
+    --card-background: #1e293b;
+    --card-border: #334155;
+    --input-background: #1e293b;
+    --input-border: #334155;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+}
