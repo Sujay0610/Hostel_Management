@@ -116,12 +116,13 @@ export default function RoomManagement() {
     <div className="room-management">
       <Card>
         <CardHeader>
-          <div className="header-with-button">
-            <h2>Room Management</h2>
-            <Button onClick={() => setShowAddForm(!showAddForm)}>
-              {showAddForm ? 'Cancel' : 'Add New Room'}
-            </Button>
-          </div>
+          <h2>Room Management</h2>
+          <Button 
+            className="header-button"
+            onClick={() => setShowAddForm(!showAddForm)}
+          >
+            {showAddForm ? 'Cancel' : 'Add New Room'}
+          </Button>
         </CardHeader>
         <CardContent>
           {showAddForm && (

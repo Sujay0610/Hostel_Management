@@ -69,7 +69,7 @@ export default function StudentFees() {
           <div className="fee-summary">
             <div className="summary-item">
               <span>Total Pending Fees:</span>
-              <span>${fees.reduce((sum, fee) => sum + fee.amount, 0).toFixed(2)}</span>
+              <span>₹{fees.reduce((sum, fee) => sum + fee.amount, 0).toFixed(2)}</span>
             </div>
             <div className="summary-item">
               <span>Number of Unpaid Fees:</span>
@@ -99,7 +99,7 @@ export default function StudentFees() {
                 {fees.map(fee => (
                   <tr key={fee.id}>
                     <td>#{fee.id}</td>
-                    <td>${fee.amount.toFixed(2)}</td>
+                    <td>₹{fee.amount.toFixed(2)}</td>
                     <td>{new Date(fee.due_date).toLocaleDateString()}</td>
                     <td>
                       <span className={`status-badge ${fee.status.toLowerCase()}`}>

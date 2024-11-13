@@ -195,7 +195,7 @@ export default function FeeManagement() {
               {fees.map((fee) => (
                 <tr key={fee.id}>
                   <td>{fee.student_name}</td>
-                  <td>${fee.amount}</td>
+                  <td>₹{fee.amount}</td>
                   <td>{new Date(fee.due_date).toLocaleDateString()}</td>
                   <td>
                     <span className={`status-badge ${fee.status.toLowerCase()}`}>
@@ -204,9 +204,6 @@ export default function FeeManagement() {
                   </td>
                   <td>{fee.description}</td>
                   <td>
-                    <Button onClick={() => fetchPaymentHistory(fee.student_id)}>
-                      View History
-                    </Button>
                     {fee.status === 'Unpaid' && (
                       <Button
                         onClick={() => handleMarkAsPaid(fee.id)}

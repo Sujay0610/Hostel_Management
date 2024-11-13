@@ -19,13 +19,9 @@ export default function Login() {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          username: credentials.username,
-          password: credentials.password
-        }),
+        body: JSON.stringify(credentials),
         credentials: 'include'
       })
 
@@ -35,18 +31,14 @@ export default function Login() {
         throw new Error(data.error || 'Login failed')
       }
 
-      // Store user info with proper MySQL fields
-      localStorage.setItem('user', JSON.stringify({
-        id: data.id,
-        username: data.username,
-        role: data.role,
-        student_id: data.student_id // for student users
-      }))
+      // Store user info
+      localStorage.setItem('user', JSON.stringify(data))
       
       // Navigate based on role
       if (data.role === 'admin') {
         navigate('/admin')
       } else if (data.role === 'student') {
+        localStorage.setItem('studentId', data.student_id)
         navigate('/student')
       }
 

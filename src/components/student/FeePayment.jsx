@@ -25,7 +25,7 @@ export default function FeePayment({ fees }) {
           {fees?.map(fee => (
             <div key={fee.id} className="fee-item">
               <h4>Fee Type: {fee.type}</h4>
-              <p>Amount: ${fee.amount}</p>
+              <p>Amount: ₹{fee.amount}</p>
               <p>Due Date: {new Date(fee.dueDate).toLocaleDateString()}</p>
               <Button onClick={() => handlePayment(fee.id)}>
                 Pay Now

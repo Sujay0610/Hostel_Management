@@ -89,6 +89,7 @@ function DashboardOverview({ stats }) {
   
   return (
     <div className="overview-container">
+      {/* Quick Stats Card */}
       <Card>
         <CardHeader>Dashboard Overview</CardHeader>
         <CardContent>
@@ -107,11 +108,61 @@ function DashboardOverview({ stats }) {
             </div>
             <div className="stat-item">
               <h3>Unpaid Fees</h3>
-              <p>${stats?.unpaid_fees?.toLocaleString() || 0}</p>
+              <p>₹{stats?.unpaid_fees?.toLocaleString() || 0}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Occupancy Overview Card */}
+      <Card>
+        <CardHeader>Occupancy Overview</CardHeader>
+        <CardContent>
+          <div className="stats-grid">
+            <div className="stat-item">
+              <h3>Total Rooms</h3>
+              <p>{stats?.total_rooms || 0}</p>
+            </div>
+            <div className="stat-item">
+              <h3>Occupied Rooms</h3>
+              <p>{stats?.occupied_rooms || 0}</p>
+            </div>
+            <div className="stat-item">
+              <h3>Available Rooms</h3>
+              <p>{stats?.available_rooms || 0}</p>
+            </div>
+            <div className="stat-item">
+              <h3>Occupancy Rate</h3>
+              <p>{stats?.occupancy_rate || 0}%</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Fee Collection Summary Card */}
+      <Card>
+        <CardHeader>Fee Collection Summary</CardHeader>
+        <CardContent>
+          <div className="stats-grid">
+            <div className="stat-item">
+              <h3>Total Fees Due</h3>
+              <p>₹{stats?.total_fees_due?.toLocaleString() || 0}</p>
+            </div>
+            <div className="stat-item">
+              <h3>Fees Collected</h3>
+              <p>₹{stats?.fees_collected?.toLocaleString() || 0}</p>
+            </div>
+            <div className="stat-item">
+              <h3>Collection Rate</h3>
+              <p>{stats?.fee_collection_rate || 0}%</p>
+            </div>
+            <div className="stat-item">
+              <h3>Pending Payments</h3>
+              <p>{stats?.pending_payments || 0}</p>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 } 

@@ -38,7 +38,6 @@ class Student(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     complaints = db.relationship('Complaint', backref='student', lazy=True)
     room_assignments = db.relationship('RoomAssignment', backref='student', lazy=True)
-    fees = db.relationship('Fee', backref='student', lazy=True)
 
 class Admin(db.Model):
     __tablename__ = 'admin'
@@ -75,6 +74,9 @@ class Fee(db.Model):
     amount = db.Column(db.Float, nullable=False)
     due_date = db.Column(db.Date, nullable=False)
     status = db.Column(db.String(20), default='Unpaid')
+    description = db.Column(db.String(200), nullable=True)
+    paid_date = db.Column(db.DateTime, nullable=True)
+    student = db.relationship('Student', backref=db.backref('fees', lazy=True))
 
 class Complaint(db.Model):
     __tablename__ = 'complaint'
@@ -231,9 +233,17 @@ def delete_student(student_id):
             # Delete the assignment
             db.session.delete(assignment)
         
-        # Delete associated complaints and fees
+        # Delete associated complaints
         Complaint.query.filter_by(student_id=student_id).delete()
+        
+        # Delete payment history records first
+        PaymentHistory.query.filter_by(student_id=student_id).delete()
+        
+        # Then delete fees
         Fee.query.filter_by(student_id=student_id).delete()
+        
+        # Delete associated user account if exists
+        User.query.filter_by(student_id=student_id).delete()
         
         # Finally, delete the student
         db.session.delete(student)
@@ -291,44 +301,99 @@ def handle_fees():
     if request.method == 'POST':
         try:
             data = request.json
+            logger.info(f"Received fee data: {data}")  # Add logging
+            
+            # Validate required fields
+            if not all(key in data for key in ['student_id', 'amount', 'due_date']):
+                return jsonify({"error": "Missing required fields"}), 400
+
+            # Verify student exists
+            student = Student.query.get(data['student_id'])
+            if not student:
+                return jsonify({"error": "Student not found"}), 404
+
             new_fee = Fee(
                 student_id=data['student_id'],
-                amount=data['amount'],
+                amount=float(data['amount']),
                 due_date=datetime.strptime(data['due_date'], '%Y-%m-%d').date(),
-                description=data.get('description', '')
+                description=data.get('description', ''),
+                status='Unpaid'
             )
+            
             db.session.add(new_fee)
             db.session.commit()
-            return jsonify({"message": "Fee added successfully"}), 201
+            
+            # Return the created fee data
+            return jsonify({
+                "message": "Fee added successfully",
+                "fee": {
+                    "id": new_fee.id,
+                    "student_id": new_fee.student_id,
+                    "amount": float(new_fee.amount),
+                    "due_date": new_fee.due_date.isoformat(),
+                    "status": new_fee.status,
+                    "description": new_fee.description,
+                    "student_name": student.name
+                }
+            }), 201
+
+        except ValueError as e:
+            db.session.rollback()
+            logger.error(f"Validation error adding fee: {str(e)}")
+            return jsonify({"error": "Invalid data format"}), 400
         except Exception as e:
             db.session.rollback()
             logger.error(f"Error adding fee: {str(e)}")
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"error": str(e)}), 500
     else:
-        fees = Fee.query.join(Student).all()
-        return jsonify([{
-            "id": f.id,
-            "amount": float(f.amount),
-            "due_date": f.due_date.isoformat(),
-            "paid_date": f.paid_date.isoformat() if f.paid_date else None,
-            "status": f.status,
-            "description": f.description,
-            "student_id": f.student_id,
-            "student_name": f.student.name
-        } for f in fees]), 200
+        try:
+            fees = Fee.query.join(Student).all()
+            return jsonify([{
+                "id": f.id,
+                "amount": float(f.amount),
+                "due_date": f.due_date.isoformat(),
+                "paid_date": f.paid_date.isoformat() if f.paid_date else None,
+                "status": f.status,
+                "description": f.description,
+                "student_id": f.student_id,
+                "student_name": f.student.name
+            } for f in fees]), 200
+        except Exception as e:
+            logger.error(f"Error fetching fees: {str(e)}")
+            return jsonify({"error": str(e)}), 500
 
 @app.route('/fees/<int:fee_id>/mark-paid', methods=['PUT'])
 def mark_fee_as_paid(fee_id):
     try:
         fee = Fee.query.get_or_404(fee_id)
+        
+        # Create payment history record
+        payment = PaymentHistory(
+            fee_id=fee.id,
+            student_id=fee.student_id,
+            amount=fee.amount,
+            payment_date=datetime.utcnow()
+        )
+        
+        # Update fee status
         fee.status = 'Paid'
         fee.paid_date = datetime.utcnow()
+        
+        db.session.add(payment)
         db.session.commit()
-        return jsonify({"message": "Fee marked as paid"}), 200
+        
+        return jsonify({
+            "message": "Fee marked as paid",
+            "fee": {
+                "id": fee.id,
+                "status": fee.status,
+                "paid_date": fee.paid_date.isoformat()
+            }
+        }), 200
     except Exception as e:
         db.session.rollback()
         logger.error(f"Error marking fee as paid: {str(e)}")
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/rooms', methods=['GET', 'POST'])
 def handle_rooms():
@@ -950,18 +1015,33 @@ def unassign_room_from_student(room_id):
         if not assignment:
             return jsonify({'error': 'No active assignment found'}), 404
             
-        # Update assignment
+        # Just mark the existing assignment as inactive
         assignment.active = False
         assignment.unassigned_date = datetime.utcnow()
         
         # Update room occupancy
         room = Room.query.get_or_404(room_id)
-        room.current_occupancy -= 1
+        if room.current_occupancy > 0:  # Safety check
+            room.current_occupancy -= 1
         room.availability = True
         
         db.session.commit()
         
-        return jsonify({'message': 'Room unassigned successfully'}), 200
+        return jsonify({
+            'message': 'Room unassigned successfully',
+            'assignment': {
+                'id': assignment.id,
+                'student_id': assignment.student_id,
+                'room_id': assignment.room_id,
+                'active': assignment.active,
+                'unassigned_date': assignment.unassigned_date.isoformat()
+            },
+            'room': {
+                'id': room.id,
+                'current_occupancy': room.current_occupancy,
+                'availability': room.availability
+            }
+        }), 200
         
     except Exception as e:
         db.session.rollback()

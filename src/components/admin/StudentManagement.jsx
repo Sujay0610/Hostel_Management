@@ -6,6 +6,7 @@ export default function StudentManagement() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [newStudent, setNewStudent] = useState({
+    student_id: '',
     name: '',
     contact: '',
     date_of_birth: ''
@@ -116,7 +117,12 @@ export default function StudentManagement() {
       }
 
       alert('Student added successfully')
-      setNewStudent({ name: '', contact: '', date_of_birth: '' })
+      setNewStudent({ 
+        student_id: '', 
+        name: '', 
+        contact: '', 
+        date_of_birth: '' 
+      })
       fetchStudents()
     } catch (error) {
       console.error('Add error:', error)
@@ -228,6 +234,14 @@ export default function StudentManagement() {
         <CardContent>
           <form onSubmit={handleAddStudent}>
             <FormGroup>
+              <Label>Student ID</Label>
+              <Input
+                value={newStudent.student_id}
+                onChange={(e) => setNewStudent({ ...newStudent, student_id: e.target.value })}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
               <Label>Name</Label>
               <Input
                 value={newStudent.name}
@@ -267,7 +281,6 @@ export default function StudentManagement() {
               <tr>
                 <th>Name</th>
                 <th>Contact</th>
-                
                 <th>Room Assignment</th>
                 <th>Actions</th>
               </tr>

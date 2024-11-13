@@ -195,9 +195,6 @@ export default function ComplaintManagement() {
                   </td>
                   <td>
                     <div className="status-history">
-                      <Button onClick={() => fetchStatusHistory(complaint.id)}>
-                        View Status History
-                      </Button>
                       {statusHistory[complaint.id] && (
                         <div className="history-timeline">
                           {statusHistory[complaint.id].map(history => (

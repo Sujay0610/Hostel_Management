@@ -45,57 +45,109 @@ export default function StudentRoom() {
         <CardHeader>My Room Details</CardHeader>
         <CardContent>
           {roomInfo ? (
-            <div className="room-details">
-              <div className="detail-item">
-                <span className="label">Room Number:</span>
-                <span className="value">{roomInfo.id}</span>
+            <div className="room-container">
+              <div className="room-info-grid">
+                <div className="room-info-card">
+                  <div className="room-number">
+                    <span className="number">{roomInfo.id}</span>
+                    <span className="label">Room Number</span>
+                  </div>
+                  <div className="room-stats">
+                    <div className="stat-item">
+                      <span className="value">{roomInfo.room_type}</span>
+                      <span className="label">Room Type</span>
+                    </div>
+                    <div className="stat-item">
+                      <span className="value">{roomInfo.capacity}</span>
+                      <span className="label">Capacity</span>
+                    </div>
+                    <div className="stat-item">
+                      <span className="value">{roomInfo.current_occupancy}/{roomInfo.capacity}</span>
+                      <span className="label">Occupancy</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="room-features">
+                  <h3>Room Features</h3>
+                  <div className="features-grid">
+                    {roomInfo.room_type === 'Single' ? (
+                      <>
+                        <div className="feature-item">
+                          <span className="icon">🛏️</span>
+                          <span>Single Bed</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="icon">📚</span>
+                          <span>Study Table</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="icon">👕</span>
+                          <span>Wardrobe</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="feature-item">
+                          <span className="icon">🛏️</span>
+                          <span>Two Beds</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="icon">📚</span>
+                          <span>Two Study Tables</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="icon">👕</span>
+                          <span>Two Wardrobes</span>
+                        </div>
+                      </>
+                    )}
+                    <div className="feature-item">
+                      <span className="icon">📶</span>
+                      <span>Wi-Fi Access</span>
+                    </div>
+                    <div className="feature-item">
+                      <span className="icon">❄️</span>
+                      <span>Air Conditioning</span>
+                    </div>
+                    <div className="feature-item">
+                      <span className="icon">🔌</span>
+                      <span>Power Outlets</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="detail-item">
-                <span className="label">Room Type:</span>
-                <span className="value">{roomInfo.room_type}</span>
-              </div>
-              <div className="detail-item">
-                <span className="label">Capacity:</span>
-                <span className="value">{roomInfo.capacity}</span>
-              </div>
-              <div className="room-features">
-                <h3>Room Features</h3>
-                <ul>
-                  {roomInfo.room_type === 'Single' && (
-                    <>
-                      <li>Private Room</li>
-                      <li>Single Bed</li>
-                      <li>Study Table</li>
-                      <li>Wardrobe</li>
-                    </>
-                  )}
-                  {roomInfo.room_type === 'Double' && (
-                    <>
-                      <li>Shared Room</li>
-                      <li>Two Beds</li>
-                      <li>Two Study Tables</li>
-                      <li>Two Wardrobes</li>
-                    </>
-                  )}
-                  <li>Wi-Fi Access</li>
-                  <li>Air Conditioning</li>
-                  <li>Power Outlets</li>
-                </ul>
-              </div>
+
               <div className="room-rules">
                 <h3>Room Rules</h3>
-                <ul>
-                  <li>Keep the room clean and tidy</li>
-                  <li>No smoking allowed</li>
-                  <li>Quiet hours: 10 PM - 6 AM</li>
-                  <li>No unauthorized guests</li>
-                  <li>Report any maintenance issues immediately</li>
-                </ul>
+                <div className="rules-grid">
+                  <div className="rule-item">
+                    <span className="icon">🧹</span>
+                    <span>Keep the room clean and tidy</span>
+                  </div>
+                  <div className="rule-item">
+                    <span className="icon">🚭</span>
+                    <span>No smoking allowed</span>
+                  </div>
+                  <div className="rule-item">
+                    <span className="icon">🌙</span>
+                    <span>Quiet hours: 10 PM - 6 AM</span>
+                  </div>
+                  <div className="rule-item">
+                    <span className="icon">👥</span>
+                    <span>No unauthorized guests</span>
+                  </div>
+                  <div className="rule-item">
+                    <span className="icon">🔧</span>
+                    <span>Report maintenance issues immediately</span>
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
             <div className="no-room">
-              <p>No room assigned yet. Please contact the hostel administration.</p>
+              <h3>No Room Assigned</h3>
+              <p>Please contact the hostel administration to get a room assigned.</p>
             </div>
           )}
         </CardContent>

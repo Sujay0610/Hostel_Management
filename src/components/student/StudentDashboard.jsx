@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent, Button } from '../ui/components'
 import StudentRoom from './StudentRoom'
 import StudentFees from './StudentFees'
 import StudentComplaints from './StudentComplaints'
-import '../../styles/dashboard.css'
+import '../../index.css'
 import '../../styles/student.css'
 
 function DashboardOverview({ studentInfo }) {
@@ -36,7 +36,7 @@ function DashboardOverview({ studentInfo }) {
           <CardHeader>Fee Status</CardHeader>
           <CardContent>
             <p>Pending Fees: {studentInfo?.pending_fees?.length || 0}</p>
-            <p>Total Amount Due: ${totalPendingAmount.toFixed(2)}</p>
+            <p>Total Amount Due: ₹{totalPendingAmount.toFixed(2)}</p>
             {studentInfo?.pending_fees?.length > 0 && (
               <Link to="/student/fees" className="view-all-link">
                 View All Fees
@@ -110,8 +110,8 @@ export default function StudentDashboard() {
   if (error) return <div className="error-message">{error}</div>
 
   return (
-    <div className="student-dashboard">
-      <nav className="dashboard-nav">
+    <div className="admin-dashboard">
+      <nav className="admin-nav">
         <div className="nav-links">
           <Link to="/student">Dashboard</Link>
           <Link to="/student/room">My Room</Link>
@@ -128,7 +128,7 @@ export default function StudentDashboard() {
           <Route path="/" element={
             <>
               {studentInfo && (
-                <Card className="welcome-card">
+                <Card className="card stat-card">
                   <CardHeader>Welcome, {studentInfo.name}</CardHeader>
                   <CardContent>
                     <p>Student ID: {studentInfo.id}</p>
